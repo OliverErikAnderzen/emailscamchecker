@@ -2,6 +2,7 @@ import os
 import requests
 # from dotenv import load_dotenv
 from flask import Flask, request, abort
+import scam_detection
 
 app = Flask(__name__)
 
@@ -21,19 +22,22 @@ def inbound_email():
 	sender = request.form.get("sender")
 	subject = request.form.get("subject")
 	body = request.form.get("body-plain") or request.form.get("body-html") or ""
+	attachments = request.files.getlist("attachment[]")
 
 	if not sender:
 		abort(400, "Sender is required")
+	if not body:
+		abort(400, "Email body is required")
 
 	# Here we add scam detection logic
+	scam_status = scam_detection(body, attachments)
 
-	scam_status = "safe"  # Placeholder for scam detection logic
 	message = ""
 
 	if scam_status == "safe":
 		message = "Your email is safe and has been processed."
 	else:
-		message = "Your email has been flagged as potential spam."
+		message = "Your email has been flagged as potential scam."
 
 	send_simple_message(
 		sender, 
