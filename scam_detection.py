@@ -1,24 +1,28 @@
-import language_tool_python as ltp
+import spell_check
+import attachment_check
+import re
 
 language = 'en-US'
-
-tool = ltp.LanguageTool(language)
 
 def scam_detection(email_body, attachments=None):
 	
 	total_score = 0
 
 	# Grammar score:
-	grammatical_errors = tool.check(email_body)
-	total_words = len(email_body.split())
-	if total_words == 0: return "safe"
-	grammar_score = 1 - (len(grammatical_errors) / total_words)
+	
+	grammar_score = spell_check(email_body)
 	
     # Attachments score:
-	# check for suspicious attachments
+
+	attachment_score = attachment_check(attachments)
 	
 	print(f"Grammar score: {grammar_score}")
+	print(f"Attachment score: {attachment_score}")
 	
+	total_score = (grammar_score + attachment_score) / 2
+
+	print(f"Total score: {total_score}")
+
 	return total_score
 
 scam_detection("This is a test email with no grammatical errors.")
