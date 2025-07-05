@@ -1,5 +1,5 @@
-import spell_check
-import attachment_check
+from spell_check import spell_check
+from attachment_check import attachment_check
 import re
 
 language = 'en-US'
