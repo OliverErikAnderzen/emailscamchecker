@@ -2,7 +2,7 @@ import os
 import requests
 # from dotenv import load_dotenv
 from flask import Flask, request, abort
-import scam_detection
+from scam_detection import scam_detection
 
 app = Flask(__name__)
 
