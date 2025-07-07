@@ -1,4 +1,15 @@
+from spellchecker import SpellChecker
+import re
 
+# A way to detect languages
+
+language = 'en'
+
+spell_checker = SpellChecker(language=language)
 
 def spell_check(text):
-    return 0.5
+    words = re.findall(r'\b\w+\b', text.lower())
+
+    misspelled = spell_checker.unknown(words)
+
+    return misspelled
