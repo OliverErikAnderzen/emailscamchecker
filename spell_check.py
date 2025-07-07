@@ -14,4 +14,4 @@ def spell_check(text):
 
     score = len(misspelled) / len(words) if words else 0
 
-    return score
+    return 1 - score
