@@ -1,8 +1,5 @@
 from spell_check import spell_check
 from attachment_check import attachment_check
-import re
-
-language = 'en-US'
 
 def scam_detection(email_body, attachments=None):
 	
@@ -10,16 +7,16 @@ def scam_detection(email_body, attachments=None):
 
 	# Grammar score:
 	
-	grammar_score = spell_check(email_body)
+	spell_score = spell_check(email_body)
 	
     # Attachments score:
 
 	attachment_score = attachment_check(attachments)
 	
-	print(f"Grammar score: {grammar_score}")
+	print(f"Grammar score: {spell_score}")
 	print(f"Attachment score: {attachment_score}")
 	
-	total_score = (grammar_score + attachment_score) / 2
+	total_score = (spell_score + attachment_score) / 2
 
 	print(f"Total score: {total_score}")
 

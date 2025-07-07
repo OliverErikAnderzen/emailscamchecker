@@ -42,7 +42,7 @@ def inbound_email():
 	send_simple_message(
 		sender, 
 		subject,
-		body + "\n\n" + message
+		message + "\n\n\n" + body
 		)
 	
 	return "Email processed successfully", 200
