@@ -3,10 +3,15 @@ import requests
 # from dotenv import load_dotenv
 from flask import Flask, request, abort
 from scam_detection import scam_detection
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+import requests
 
 app = Flask(__name__)
 
 # load_dotenv()
+
+limiter = Limiter(app, key_func=get_remote_address, default_limits=["30 per minute"])
 
 def send_simple_message(to, subject, text):
   	return requests.post(
@@ -18,6 +23,7 @@ def send_simple_message(to, subject, text):
   			"text": text})
 
 @app.route("/inbound-email", methods=["POST"])
+@limiter.limit("10 per minute")
 def inbound_email():
 	sender = request.form.get("sender")
 	subject = request.form.get("subject")

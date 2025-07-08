@@ -13,7 +13,6 @@ def scam_detection(email_body, attachments=None):
 		attachment_score, attachment_message = attachment_check(attachments)
 		print(f"Attachment score: {attachment_score}")
 		total_score = (spell_score + attachment_score) / 2
-	# Total score:
 	else:
 		total_score = spell_score
 	
