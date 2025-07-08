@@ -34,10 +34,10 @@ def inbound_email():
 
 	message = ""
 
-	if scam_status >= 0.8:
-		message = "Your email is safe and has been processed."
-	else:
+	if scam_status <= 0.8:
 		message = "Your email has been flagged as potential scam."
+	else:
+		message = "Your email has been processed successfully and does not indicate scam."
 
 	send_simple_message(
 		sender, 
